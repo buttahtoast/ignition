@@ -1,30 +1,33 @@
 {
-  "ignition": { "version": "2.0.0" },
-  "systemd": {
-    "units": [
-      {
-        "contents": "[Unit]\nDescription=Flatcar Container Linux Installation\n\n[Service]\nType=oneshot\nExecStart=/tmp/flatcar-install.sh\n\n[Install]\nWantedBy=multi-user.target\n",
-        "enabled": true,
-        "name": "flatcar-install.service"
-      }
-    ]
-  },
-  "storage": {
-     "links": [
-       {
-         "filesystem": "root",
-         "path": "/etc/systemd/system/multi-user.target.wants/flatcar-install.service",
-         "target": "/etc/systemd/system/flatcar-install.service"
-       }
-     ],
-    "files": [{
-      "filesystem": "root",
-      "path": "/tmp/flatcar-install.sh",
-      "mode": 777,
-      "contents":
-        inline: !!binary |
-          IyEvYmluL3NoCgovdXNyL2Jpbi9jdXJsIC1MIGh0dHBzOi8vcmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbS9idXR0YWh0b2FzdC9pZ25pdGlvbi9tYWluL3Byb2R1Y3Rpb24uanNvbiAtbyBpZ25pdGlvbi5qc29uCi91c3IvYmluL2ZsYXRjYXItaW5zdGFsbCAtcyAtQyBzdGFibGUgLWkgLi9pZ25pdGlvbi5qc29uCi91c3Ivc2Jpbi9yZWJvb3QK          
-    }]
-   }
-}
-
+    "ignition": { "version": "2.0.0" },
+    "systemd": {
+      "units": [
+        {
+          "contents": "[Unit]\nDescription=Flatcar Container Linux Installation\n\n[Service]\nType=oneshot\nExecStart=/tmp/flatcar-install.sh\n\n[Install]\nWantedBy=multi-user.target\n",
+          "enabled": true,
+          "name": "flatcar-install.service"
+        }
+      ]
+    },
+    "storage": {
+       "links": [
+         {
+           "filesystem": "root",
+           "path": "/etc/systemd/system/multi-user.target.wants/flatcar-install.service",
+           "target": "/etc/systemd/system/flatcar-install.service"
+         }
+       ],
+      "files": [
+        {
+        "filesystem": "root",
+        "path": "/tmp/flatcar-install.sh",
+        "mode": 777,
+        "contents": {
+          "source": "data:;base64,IyEvYmluL3NoCgovdXNyL2Jpbi9jdXJsIC1MIGh0dHBzOi8vcmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbS9idXR0YWh0b2FzdC9pZ25pdGlvbi9tYWluL3Byb2R1Y3Rpb24uanNvbiAtbyBpZ25pdGlvbi5qc29uCi91c3IvYmluL2ZsYXRjYXItaW5zdGFsbCAtcyAtQyBzdGFibGUgLWkgLi9pZ25pdGlvbi5qc29uCi91c3Ivc2Jpbi9yZWJvb3QK"
+        }        
+        }
+      ]
+     }
+  }
+  
+  

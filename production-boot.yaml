@@ -15,4 +15,24 @@ systemd:
 
         [Install]
         WantedBy=multi-user.target
-
+storage:
+  files:
+    - path: /etc/systemd/network/00-vmware.network
+      contents:
+        inline: |
+          [Match]
+          Name=ens192
+          [Network]
+          DHCP=no
+          DNS=1.1.1.1
+          DNS=1.0.0.1
+          [Address]
+          Address=123.45.67.2/29
+          [Address]
+          Address=10.0.0.2/29
+          [Route]
+          Destination=0.0.0.0/0
+          Gateway=123.45.67.1
+          [Route]
+          Destination=10.0.0.0/8
+          Gateway=10.0.0.1 
