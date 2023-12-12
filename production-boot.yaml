@@ -15,13 +15,9 @@ systemd:
         [Install]
         WantedBy=multi-user.target
 storage:
-  links:
-    - filesystem: "root"
-      path: "/etc/systemd/system/multi-user.target.wants/flatcar-install.service"
-      target: "/etc/systemd/system/flatcar-install.service"
   files:
     - path: /root/flatcar-install.sh
-      mode: 700
+      mode: 0700
       contents:
         inline: |
           #!/bin/sh
