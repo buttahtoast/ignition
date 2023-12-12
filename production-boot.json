@@ -9,5 +9,14 @@
       }
     ]
   }
+  "storage": {
+     "links": [
+       {
+         "filesystem": "root",
+         "path": "/etc/systemd/system/multi-user.target.wants/flatcar-install.service",
+         "target": "/etc/systemd/system/flatcar-install.service"
+       }
+     ]
+   }
 }
 
