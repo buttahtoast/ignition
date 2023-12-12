@@ -3,7 +3,7 @@
   "systemd": {
     "units": [
       {
-        "contents": "[Unit]\nDescription=Flatcar Container Linux Installation\n\n[Service]\nType=oneshot\nExecStart=/usr/bin/curl -L https://raw.githubusercontent.com/buttahtoast/ignition/main/production.json -o ignition.json ; /usr/bin/flatcar-install -s -C stable -i ./ignition.json\nRemainAfterExit=true ; /usr/sbin/reboot \n\n[Install]\nWantedBy=multi-user.target\n",
+        "contents": "[Unit]\nDescription=Flatcar Container Linux Installation\n\n[Service]\nType=oneshot\nExecStart=/usr/bin/curl -L https://raw.githubusercontent.com/buttahtoast/ignition/main/production.json -o ignition.json ; /usr/bin/flatcar-install -s -C stable -i ./ignition.json ; /usr/sbin/reboot\nRemainAfterExit=true \n\n[Install]\nWantedBy=multi-user.target\n",
         "enabled": true,
         "name": "flatcar-install.service"
       }
