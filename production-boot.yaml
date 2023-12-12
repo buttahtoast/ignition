@@ -10,13 +10,13 @@ systemd:
 
         [Service]
         Type=oneshot
-        ExecStart=/root/flatcar-install.sh
+        ExecStart=/opt/flatcar-install.sh
 
         [Install]
         WantedBy=multi-user.target
 storage:
   files:
-    - path: /root/flatcar-install.sh
+    - path: /opt/flatcar-install.sh
       mode: 0700
       contents:
         inline: |
