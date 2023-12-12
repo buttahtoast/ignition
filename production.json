@@ -20,7 +20,7 @@
       },
       {
         "name": "10-bond0.netdev",
-        "contents": "[NetDev]\nName=bond0\nKind=bond\nMode=802.3ad"
+        "contents": "[NetDev]\nName=bond0\nKind=bond\nMode=balance-rr"
       },
       {
         "name": "20-bond0.network",
