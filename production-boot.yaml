@@ -1,0 +1,18 @@
+variant: flatcar 
+version: 1.0.0
+systemd:
+  units:
+    - name: flatcar-install.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Flatcar Container Linux Installation
+
+        [Service]
+        Type=oneshot
+        ExecStart=/usr/bin/curl -L https://raw.githubusercontent.com/buttahtoast/ignition/main/production.json -o ignition.json ; /usr/bin/flatcar-install -s -C stable -i ./ignition.json
+        RemainAfterExit=true
+
+        [Install]
+        WantedBy=multi-user.target
+
