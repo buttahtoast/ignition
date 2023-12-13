@@ -21,7 +21,8 @@ storage:
       contents:
         inline: |
           #!/bin/sh
+          sleep 10
           echo "installing flatcar..." > /dev/tty1
-          /usr/bin/curl -L https://raw.githubusercontent.com/buttahtoast/ignition/main/production.json -o ignition.json
+          /usr/bin/curl --max-time 10 --retry 5 --retry-delay 0 --retry-max-time 40 -L https://raw.githubusercontent.com/buttahtoast/ignition/main/production.json -o ignition.json
           /usr/bin/flatcar-install -s -C stable -i ./ignition.json > /dev/tty1
           /usr/sbin/reboot
