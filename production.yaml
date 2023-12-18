@@ -7,7 +7,7 @@ systemd:
       mask: true
     - name: update-engine.service
       enabled: true
-    - name: update-engine.service
+    - name: iscsid.service
       enabled: true
     - name: iscsid-initiatorname.service
       dropins:
