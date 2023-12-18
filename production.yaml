@@ -80,7 +80,6 @@ storage:
   files:
     - path: /etc/modules-load.d/iscsi_tcp.conf
       mode: 0420
-      filesystem: root
       contents:
         inline: |
           iscsi_tcp
