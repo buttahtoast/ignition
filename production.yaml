@@ -13,7 +13,6 @@ systemd:
           contents: |
             [Install]
             WantedBy=multi-user.target
-    - name: iscsid-initiatorname.service
       enabled: true
     - name: install-opt-dir.service
       enabled: true

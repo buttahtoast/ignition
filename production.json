@@ -12,20 +12,20 @@
   "storage": {
     "files": [
       {
+        "path": "/etc/modules-load.d/iscsi_tcp.conf",
+        "contents": {
+          "compression": "",
+          "source": "data:,iscsi_tcp%0A"
+        },
+        "mode": 272
+      },
+      {
         "path": "/etc/sysctl.d/buttah.conf",
         "contents": {
           "compression": "",
           "source": "data:,fs.inotify.max_user_instances%3D1280%0Afs.inotify.max_user_watches%3D655360"
         },
         "mode": 420
-      },
-      {
-        "filesystem": "root",
-        "path": "/etc/modules-load.d/iscsi_tcp.conf",
-        "mode": 420,
-        "contents": {
-          "source": "data:,iscsi_tcp"
-        }
       }
     ]
   },
@@ -40,27 +40,24 @@
         "name": "update-engine.service"
       },
       {
-        "name": "iscsid-initiatorname.service",
         "dropins": [
           {
-            "name": "iscsi-initiatorname.conf",
-            "contents": "[Install]\n\tWantedBy=multi-user.target\n"
+            "contents": "[Install]\nWantedBy=multi-user.target\n",
+            "name": "iscsi-initiatorname.conf"
           }
-        ]
-      },
-      {
-        "name": "iscsid-initiatorname.service",
-        "enabled": true
-      },
-      {
-        "name": "install-opt-dir.service",
+        ],
         "enabled": true,
-        "contents": "[Unit]\n\tDescription=Install /opt directories\n\tConditionPathIsDirectory=!/opt/libexec\n\tConditionPathIsDirectory=!/opt/libexec.wd\n\n[Service]\n\tType=oneshot\n\tExecStart=/usr/bin/mkdir -p /opt/libexec /opt/libexec.wd\n\n[Install]\n\tWantedBy=multi-user.target\n"
+        "name": "iscsid-initiatorname.service"
       },
       {
-        "name": "usr-libexec.mount",
+        "contents": "[Unit]\nDescription=Install /opt directories\nConditionPathIsDirectory=!/opt/libexec\nConditionPathIsDirectory=!/opt/libexec.wd\n\n[Service]\nType=oneshot\nExecStart=/usr/bin/mkdir -p /opt/libexec /opt/libexec.wd\n\n[Install]\nWantedBy=multi-user.target\n",
         "enabled": true,
-        "contents": "[Unit]\n\tDescription=Allow k8s CNI plugins to be installed\n\tBefore=local-fs.target\n\tRequires=install-opt-dir.service\n\tConditionPathExists=/opt/libexec\n\tConditionPathExists=/opt/libexec.wd\n[Mount]\n\tType=overlay\n\tWhat=overlay\n\tWhere=/usr/libexec\n\tOptions=lowerdir=/usr/libexec,upperdir=/opt/libexec,workdir=/opt/libexec.wd\n[Install]\n\tWantedBy=local-fs.target\n"
+        "name": "install-opt-dir.service"
+      },
+      {
+        "contents": "[Unit]\nDescription=Allow k8s CNI plugins to be installed\nBefore=local-fs.target\nRequires=install-opt-dir.service\nConditionPathExists=/opt/libexec\nConditionPathExists=/opt/libexec.wd\n\n[Mount]\nType=overlay\nWhat=overlay\nWhere=/usr/libexec\nOptions=lowerdir=/usr/libexec,upperdir=/opt/libexec,workdir=/opt/libexec.wd\n\n[Install]\nWantedBy=local-fs.target\n",
+        "enabled": true,
+        "name": "usr-libexec.mount"
       }
     ]
   }
