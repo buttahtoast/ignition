@@ -26,4 +26,5 @@ storage:
           /usr/bin/curl --max-time 10 --retry 5 --retry-delay 0 --retry-max-time 40 -L https://raw.githubusercontent.com/buttahtoast/ignition/main/production.json -o ignition.json
           cat ignition.json
           /usr/bin/flatcar-install -s -C stable -i ./ignition.json 
+          /usr/bin/sleep 20
           /usr/sbin/reboot
