@@ -7,6 +7,46 @@ systemd:
       mask: true
     - name: update-engine.service
       enabled: true
+    - name: iscsid-initiatorname.service
+      dropins:
+        - name: iscsi-initiatorname.conf
+          contents: |
+            [Install]
+            WantedBy=multi-user.target
+    - name: iscsid-initiatorname.service
+      enabled: true
+    - name: install-opt-dir.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Install /opt directories
+        ConditionPathIsDirectory=!/opt/libexec
+        ConditionPathIsDirectory=!/opt/libexec.wd
+        
+        [Service]
+        Type=oneshot
+        ExecStart=/usr/bin/mkdir -p /opt/libexec /opt/libexec.wd
+        
+        [Install]
+        WantedBy=multi-user.target
+    - name: usr-libexec.mount
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Allow k8s CNI plugins to be installed
+        Before=local-fs.target
+        Requires=install-opt-dir.service
+        ConditionPathExists=/opt/libexec
+        ConditionPathExists=/opt/libexec.wd
+        
+        [Mount]
+        Type=overlay
+        What=overlay
+        Where=/usr/libexec
+        Options=lowerdir=/usr/libexec,upperdir=/opt/libexec,workdir=/opt/libexec.wd
+        
+        [Install]
+        WantedBy=local-fs.target
 networkd:
   units:
     - name: 00-eth.network
@@ -39,6 +79,12 @@ passwd:
           rsa-key-olb-desktop
 storage:
   files:
+    - path: /etc/modules-load.d/iscsi_tcp.conf
+      mode: 0420
+      filesystem: root
+      contents:
+        inline: |
+          iscsi_tcp
     - path: /etc/sysctl.d/buttah.conf
       mode: 0644
       contents:

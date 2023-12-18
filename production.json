@@ -18,6 +18,14 @@
           "source": "data:,fs.inotify.max_user_instances%3D1280%0Afs.inotify.max_user_watches%3D655360"
         },
         "mode": 420
+      },
+      {
+        "filesystem": "root",
+        "path": "/etc/modules-load.d/iscsi_tcp.conf",
+        "mode": 420,
+        "contents": {
+          "source": "data:,iscsi_tcp"
+        }
       }
     ]
   },
@@ -30,6 +38,29 @@
       {
         "enabled": true,
         "name": "update-engine.service"
+      },
+      {
+        "name": "iscsid-initiatorname.service",
+        "dropins": [
+          {
+            "name": "iscsi-initiatorname.conf",
+            "contents": "[Install]\n\tWantedBy=multi-user.target\n"
+          }
+        ]
+      },
+      {
+        "name": "iscsid-initiatorname.service",
+        "enabled": true
+      },
+      {
+        "name": "install-opt-dir.service",
+        "enabled": true,
+        "contents": "[Unit]\n\tDescription=Install /opt directories\n\tConditionPathIsDirectory=!/opt/libexec\n\tConditionPathIsDirectory=!/opt/libexec.wd\n\n[Service]\n\tType=oneshot\n\tExecStart=/usr/bin/mkdir -p /opt/libexec /opt/libexec.wd\n\n[Install]\n\tWantedBy=multi-user.target\n"
+      },
+      {
+        "name": "usr-libexec.mount",
+        "enabled": true,
+        "contents": "[Unit]\n\tDescription=Allow k8s CNI plugins to be installed\n\tBefore=local-fs.target\n\tRequires=install-opt-dir.service\n\tConditionPathExists=/opt/libexec\n\tConditionPathExists=/opt/libexec.wd\n[Mount]\n\tType=overlay\n\tWhat=overlay\n\tWhere=/usr/libexec\n\tOptions=lowerdir=/usr/libexec,upperdir=/opt/libexec,workdir=/opt/libexec.wd\n[Install]\n\tWantedBy=local-fs.target\n"
       }
     ]
   }
