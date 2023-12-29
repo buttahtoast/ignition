@@ -2,6 +2,11 @@
   "ignition": {
     "version": "3.3.0"
   },
+  "kernelArguments": {
+    "shouldExist": [
+      "intel_iommu=on"
+    ]
+  },
   "passwd": {
     "users": [
       {
@@ -27,7 +32,7 @@
         "path": "/etc/sysctl.d/buttah.conf",
         "contents": {
           "compression": "",
-          "source": "data:,fs.inotify.max_user_instances%3D1280%0Afs.inotify.max_user_watches%3D655360"
+          "source": "data:,fs.inotify.max_user_instances%3D1280%0Afs.inotify.max_user_watches%3D655360%0A"
         },
         "mode": 420
       }

@@ -48,28 +48,7 @@ systemd:
         
         [Install]
         WantedBy=local-fs.target
-networkd:
-  units:
-    - name: 00-eth.network
-      contents: |
-        [Match]
-        Name=eno*
-        
-        [Network]
-        Bond=bond0
-    - name: 10-bond0.netdev
-      contents: |
-        [NetDev]
-        Name=bond0
-        Kind=bond
-        Mode=balance-rr
-    - name: 20-bond0.network
-      contents: |
-        [Match]
-        Name=bond0
-        
-        [Network]
-        DHCP=true
+
 passwd:
   users:
     - name: core
@@ -89,3 +68,6 @@ storage:
         inline: |
           fs.inotify.max_user_instances=1280
           fs.inotify.max_user_watches=655360
+kernel_arguments:
+  should_exist:
+    - intel_iommu=on
