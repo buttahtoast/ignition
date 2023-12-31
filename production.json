@@ -22,10 +22,10 @@
   "storage": {
     "files": [
       {
-        "path": "/etc/modules-load.d/iscsi_tcp.conf",
+        "path": "/etc/modules-load.d/buttah.conf",
         "contents": {
           "compression": "",
-          "source": "data:,iscsi_tcp%0A"
+          "source": "data:,iscsi_tcp%0Avhost-net%0A"
         },
         "mode": 272
       },

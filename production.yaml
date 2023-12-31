@@ -58,11 +58,12 @@ passwd:
         - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAP83JsqhLdMKyH8HRTG10FK5rPeczmtPcjB+qnt5bo6 seb_buttah
 storage:
   files:
-    - path: /etc/modules-load.d/iscsi_tcp.conf
+    - path: /etc/modules-load.d/buttah.conf
       mode: 0420
       contents:
         inline: |
           iscsi_tcp
+          vhost-net
     - path: /etc/sysctl.d/buttah.conf
       mode: 0644
       contents:
